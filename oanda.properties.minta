@@ -1,0 +1,5 @@
+# Másold le ezt a fájlt oanda.properties néven (a projekt főmappájába / a jar mellé),
+# és írd be a saját adataidat. Az oanda.properties nem kerül fel a GitHubra.
+oanda.token=IDE_A_TOKEN
+# Nem kötelező: ha üres, az első számlát használja
+oanda.account-id=

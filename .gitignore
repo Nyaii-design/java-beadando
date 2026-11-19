@@ -1,0 +1,6 @@
+target/
+.idea/
+*.iml
+.vscode/
+# Az Oanda-token ide kerül, ezért NEM töltjük fel:
+oanda.properties
