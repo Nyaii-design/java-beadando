@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('SOAP – MNB árfolyamok')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu('soap')}"></nav>
+
+<main class="container">
+    <h2 class="oldal-cim"><i class="bi bi-bank"></i> MNB devizaárfolyamok (SOAP)</h2>
+
+    <div class="card mb-4"><div class="card-body">
+        <form th:action="@{/soap}" th:object="${urlap}" method="post" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">Deviza</label>
+                <select class="form-select" th:field="*{deviza}">
+                    <option th:each="d : ${devizak}" th:value="${d}" th:text="${d}">EUR</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Kezdő dátum</label>
+                <input type="date" class="form-control" th:field="*{kezdoDatum}" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Befejező dátum</label>
+                <input type="date" class="form-control" th:field="*{befejezoDatum}" required>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Lekérdezés</button>
+            </div>
+        </form>
+    </div></div>
+
+    <div th:replace="~{fragments :: hiba}"></div>
+
+    <div th:if="${arfolyamok != null and !arfolyamok.isEmpty()}" class="row g-4">
+        <div class="col-lg-8">
+            <div class="card"><div class="card-body">
+                <h5 class="card-title" th:text="${urlap.deviza} + '/HUF árfolyam'">EUR/HUF</h5>
+                <canvas id="grafikon"></canvas>
+            </div></div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card"><div class="card-body" style="max-height: 480px; overflow-y: auto;">
+                <table class="table table-striped table-sm mb-0">
+                    <thead><tr><th>Dátum</th><th>Egység</th><th class="text-end">Árfolyam (Ft)</th></tr></thead>
+                    <tbody>
+                    <tr th:each="a : ${arfolyamok}">
+                        <td th:text="${a.datum()}"></td>
+                        <td th:text="${a.egyseg()}"></td>
+                        <td class="text-end" th:text="${#numbers.formatDecimal(a.ertek(), 1, 2, 'COMMA')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: lablec}"></footer>
+
+<script th:if="${arfolyamok != null and !arfolyamok.isEmpty()}" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script th:if="${arfolyamok != null and !arfolyamok.isEmpty()}" th:inline="javascript">
+    const datumok = /*[[${datumok}]]*/ [];
+    const ertekek = /*[[${ertekek}]]*/ [];
+    const deviza = /*[[${urlap.deviza}]]*/ 'EUR';
+    new Chart(document.getElementById('grafikon'), {
+        type: 'line',
+        data: {
+            labels: datumok,
+            datasets: [{
+                label: deviza + ' árfolyam (Ft)',
+                data: ertekek,
+                borderColor: '#18bc9c',
+                backgroundColor: 'rgba(24,188,156,0.15)',
+                fill: true,
+                tension: 0.2
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: false } } }
+    });
+</script>
+</body>
+</html>
