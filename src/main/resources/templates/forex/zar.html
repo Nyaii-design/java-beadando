@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Forex-Zár')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu('zar')}"></nav>
+
+<main class="container">
+    <h2 class="oldal-cim"><i class="bi bi-x-circle"></i> Forex-Zár – pozíció zárása piaci áron</h2>
+
+    <div class="card mb-4"><div class="card-body">
+        <form th:action="@{/forex/zar}" method="post" class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label class="form-label">tradeId</label>
+                <input type="number" name="tradeId" class="form-control" min="1" step="1" th:value="${tradeId}" required>
+                <div class="form-text">A tradeId a <a th:href="@{/forex/poz}">Forex-Poz</a> menüben látható.</div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-danger w-100"><i class="bi bi-x-octagon"></i> Zárás</button>
+            </div>
+        </form>
+    </div></div>
+
+    <div th:replace="~{fragments :: hiba}"></div>
+
+    <div th:if="${siker}" class="alert alert-success">
+        <h5><i class="bi bi-check-circle"></i> A pozíció lezárva</h5>
+        <p class="mb-1"><strong>tradeId:</strong> <span th:text="${tradeId}"></span></p>
+        <p class="mb-1" th:if="${ar}"><strong>Záróár:</strong> <span th:text="${ar}"></span></p>
+        <p class="mb-0" th:if="${pl}"><strong>Eredmény (P/L):</strong> <span th:text="${pl}"></span></p>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: lablec}"></footer>
+</body>
+</html>
