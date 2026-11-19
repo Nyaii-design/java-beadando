@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Főoldal')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu('fooldal')}"></nav>
+
+<main>
+    <section class="hero text-center">
+        <div class="container">
+            <h1 class="display-4">DevizaPont</h1>
+            <p class="lead">Devizaárfolyamok a Magyar Nemzeti Banktól és devizakereskedés az Oanda demószámláján, egy helyen.</p>
+            <a th:href="@{/soap}" class="btn btn-light btn-lg me-2"><i class="bi bi-graph-up"></i> MNB árfolyamok</a>
+            <a th:href="@{/forex/aktar}" class="btn btn-outline-light btn-lg"><i class="bi bi-lightning"></i> Élő árak</a>
+        </div>
+    </section>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Mit tud az alkalmazás?</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <a th:href="@{/soap}" class="text-decoration-none text-reset">
+                    <div class="card h-100 funkcio-kartya"><div class="card-body">
+                        <i class="bi bi-bank"></i>
+                        <h5 class="card-title mt-2">SOAP – MNB</h5>
+                        <p class="card-text">Hivatalos MNB-árfolyamok tetszőleges időszakra, táblázatban és grafikonon.</p>
+                    </div></div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a th:href="@{/forex/account}" class="text-decoration-none text-reset">
+                    <div class="card h-100 funkcio-kartya"><div class="card-body">
+                        <i class="bi bi-wallet2"></i>
+                        <h5 class="card-title mt-2">Számla</h5>
+                        <p class="card-text">Az Oanda demószámla egyenlege, fedezete és nyitott pozícióinak száma.</p>
+                    </div></div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a th:href="@{/forex/histar}" class="text-decoration-none text-reset">
+                    <div class="card h-100 funkcio-kartya"><div class="card-body">
+                        <i class="bi bi-clock-history"></i>
+                        <h5 class="card-title mt-2">Aktuális és historikus árak</h5>
+                        <p class="card-text">Élő bid/ask ár és az utolsó 10 gyertya bármely granularity-vel.</p>
+                    </div></div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a th:href="@{/forex/nyit}" class="text-decoration-none text-reset">
+                    <div class="card h-100 funkcio-kartya"><div class="card-body">
+                        <i class="bi bi-arrow-left-right"></i>
+                        <h5 class="card-title mt-2">Kereskedés</h5>
+                        <p class="card-text">Long és Short pozíció nyitása, listázása és zárása piaci áron.</p>
+                    </div></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-5 align-items-center">
+            <div class="col-lg-6">
+                <h3>A projektről</h3>
+                <p>Az alkalmazás a Java alkalmazások tantárgy előadásának beadandójaként készült, Java 25 és Spring Boot keretrendszer felhasználásával.
+                    A SOAP menü a Magyar Nemzeti Bank webszolgáltatását használja, a Forex menük pedig az Oanda v20 REST API-n keresztül kommunikálnak egy demószámlával.</p>
+            </div>
+            <div class="col-lg-6">
+                <ul class="list-group">
+                    <li class="list-group-item"><i class="bi bi-check2-circle text-success"></i> Java 25, Spring Boot, Thymeleaf</li>
+                    <li class="list-group-item"><i class="bi bi-check2-circle text-success"></i> SOAP kliens (JAX-WS) + Chart.js grafikon</li>
+                    <li class="list-group-item"><i class="bi bi-check2-circle text-success"></i> Oanda v20 API</li>
+                    <li class="list-group-item"><i class="bi bi-check2-circle text-success"></i> Bootswatch Flatly reszponzív téma</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: lablec}"></footer>
+</body>
+</html>
