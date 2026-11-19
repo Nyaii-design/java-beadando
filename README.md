@@ -12,7 +12,7 @@ java -jar beadando.jar
 ```
 Utána böngészőben: http://localhost:8080
 
-## Oanda-token beállítása (NE kerüljön a GitHubra!)
+## Oanda-token beállítása
 
 1. Másold le az `oanda.properties.minta` fájlt **`oanda.properties`** néven
    ugyanabba a mappába, ahonnan a programot indítod (projekt főmappája / a jar mellé).
