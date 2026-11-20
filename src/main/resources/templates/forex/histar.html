@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Forex-HistÁr')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu('histar')}"></nav>
+
+<main class="container">
+    <h2 class="oldal-cim"><i class="bi bi-clock-history"></i> Forex-HistÁr – utolsó 10 historikus ár</h2>
+
+    <div class="card mb-4"><div class="card-body">
+        <form th:action="@{/forex/histar}" method="post" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Instrumentum</label>
+                <select name="instrument" class="form-select">
+                    <option th:each="i : ${instrumentumok}" th:value="${i}" th:text="${i}" th:selected="${i == instrument}"></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Granularity</label>
+                <select name="granularity" class="form-select">
+                    <option th:each="g : ${granularityk}" th:value="${g}" th:text="${g}" th:selected="${g == granularity}"></option>
+                </select>
+                <div class="form-text">M1 = 1 perc, H1 = 1 óra, D = nap, W = hét, M = hónap</div>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Lekérdezés</button>
+            </div>
+        </form>
+    </div></div>
+
+    <div th:replace="~{fragments :: hiba}"></div>
+
+    <div th:if="${gyertyak}" class="card"><div class="card-body">
+        <h5 class="card-title" th:text="${instrument} + ' – ' + ${granularity}"></h5>
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead><tr><th>#</th><th>Időpont</th><th>Nyitó</th><th>Max</th><th>Min</th><th>Záró</th></tr></thead>
+                <tbody>
+                <tr th:each="g, st : ${gyertyak}">
+                    <td th:text="${st.count}"></td>
+                    <td th:text="${g.ido()}"></td>
+                    <td th:text="${g.nyito()}"></td>
+                    <td th:text="${g.max()}"></td>
+                    <td th:text="${g.min()}"></td>
+                    <td><strong th:text="${g.zaro()}"></strong></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div></div>
+</main>
+
+<footer th:replace="~{fragments :: lablec}"></footer>
+</body>
+</html>

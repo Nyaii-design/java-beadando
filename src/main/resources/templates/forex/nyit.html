@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Forex-Nyit')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu('nyit')}"></nav>
+
+<main class="container">
+    <h2 class="oldal-cim"><i class="bi bi-box-arrow-in-right"></i> Forex-Nyit – pozíció nyitása piaci áron</h2>
+
+    <div class="card mb-4"><div class="card-body">
+        <form th:action="@{/forex/nyit}" method="post" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Instrumentum</label>
+                <select name="instrument" class="form-select">
+                    <option th:each="i : ${instrumentumok}" th:value="${i}" th:text="${i}" th:selected="${i == instrument}"></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Mennyiség</label>
+                <input type="number" name="mennyiseg" class="form-control" th:value="${mennyiseg}" step="1" required>
+                <div class="form-text">Pozitív szám = Long (vétel), negatív szám = Short (eladás)</div>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success w-100"><i class="bi bi-cart-check"></i> Pozíció nyitása</button>
+            </div>
+        </form>
+    </div></div>
+
+    <div th:replace="~{fragments :: hiba}"></div>
+
+    <div th:if="${tradeId}" class="alert alert-success">
+        <h5><i class="bi bi-check-circle"></i> A pozíció megnyílt</h5>
+        <p class="mb-1"><strong>tradeId:</strong> <span th:text="${tradeId}"></span></p>
+        <p class="mb-1"><strong>Instrumentum:</strong> <span th:text="${instrument}"></span></p>
+        <p class="mb-1"><strong>Irány:</strong> <span th:text="${irany}"></span></p>
+        <p class="mb-1"><strong>Mennyiség:</strong> <span th:text="${mennyiseg}"></span></p>
+        <p class="mb-0"><strong>Nyitóár:</strong> <span th:text="${ar}"></span></p>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: lablec}"></footer>
+</body>
+</html>

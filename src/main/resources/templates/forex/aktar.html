@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Forex-AktÁr')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu('aktar')}"></nav>
+
+<main class="container">
+    <h2 class="oldal-cim"><i class="bi bi-lightning"></i> Forex-AktÁr – aktuális ár</h2>
+
+    <div class="card mb-4"><div class="card-body">
+        <form th:action="@{/forex/aktar}" method="post" class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label class="form-label">Instrumentum</label>
+                <select name="instrument" class="form-select">
+                    <option th:each="i : ${instrumentumok}" th:value="${i}" th:text="${i}" th:selected="${i == instrument}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Aktuális ár</button>
+            </div>
+        </form>
+    </div></div>
+
+    <div th:replace="~{fragments :: hiba}"></div>
+
+    <div th:if="${van}" class="row g-4">
+        <div class="col-md-6">
+            <div class="card text-center border-danger"><div class="card-body">
+                <div class="text-muted">Bid (eladási ár)</div>
+                <div class="ar-doboz text-danger" th:text="${bid}"></div>
+            </div></div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center border-success"><div class="card-body">
+                <div class="text-muted">Ask (vételi ár)</div>
+                <div class="ar-doboz text-success" th:text="${ask}"></div>
+            </div></div>
+        </div>
+        <div class="col-12">
+            <p class="mb-1"><strong>Instrumentum:</strong> <span th:text="${instrument}"></span></p>
+            <p class="mb-1"><strong>Időpont:</strong> <span th:text="${ido}"></span></p>
+            <p><strong>Kereskedhető:</strong> <span th:text="${kereskedheto}"></span></p>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: lablec}"></footer>
+</body>
+</html>
